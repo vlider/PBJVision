@@ -217,6 +217,7 @@ typedef NS_ENUM(GLint, PBJVisionUniformLocationTypes)
 @synthesize additionalCompressionProperties = _additionalCompressionProperties;
 @synthesize additionalVideoProperties = _additionalVideoProperties;
 @synthesize maximumCaptureDuration = _maximumCaptureDuration;
+@synthesize customVideoDimensions = _customVideoDimensions;
 
 #pragma mark - singleton
 
@@ -2141,6 +2142,14 @@ typedef void (^PBJVisionBlock)();
         {
             videoDimensions.width = dimensions.width;
             videoDimensions.height = (int32_t)(dimensions.width * 3 / 4.0f);
+            break;
+        }
+        case PBJOutputFormatCustom:
+        {
+            NSAssert(self.customVideoDimensions.width != 0 && self.customVideoDimensions.height != 0, @"Custom video dimentions not set");
+            
+            videoDimensions.width = (int32_t)self.customVideoDimensions.width;
+            videoDimensions.height = (int32_t)self.customVideoDimensions.height;
             break;
         }
         case PBJOutputFormatPreset:
